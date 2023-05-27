@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full" v-if="links">
+  <div class="w-full" v-if="links.length">
     <div
       v-for="link in links"
       :key="link.id"
@@ -38,7 +38,7 @@
               :icon="['fa', 'edit']"
             />
           </button>
-          <button>
+          <button @click="deleteShortLink(link.id)">
             <font-awesome-icon
               class="text-sm text-gray-400"
               :icon="['fa', 'trash']"
@@ -60,7 +60,7 @@
           <h2 class="text-h5 mt-5 text-gray-400 text-center">Edit Your Link</h2>
         </v-card-title>
         <v-card-text>
-          <v-form v-model="isValidForm" @submit.prevent="submit">
+          <v-form v-model="isValidForm" @submit.prevent="submit(form.id)">
             <v-text-field
               type="text"
               v-model="form.url"
@@ -100,6 +100,9 @@
 
 <script>
 import { listLinks } from "../../../lib/listLinks";
+import { handleCreateOrUpdateLink } from "../../../lib/handleCreateOrUpdateLink";
+import { handleDeleteLink } from "../../../lib/handleDeleteLink";
+
 export default {
   name: "CardLink",
   data() {
@@ -107,6 +110,7 @@ export default {
       dialog: false,
       links: [],
       form: {
+        id: "",
         url: "",
         slug: "",
       },
@@ -124,44 +128,41 @@ export default {
       const link = this.links.find((link) => link.id === id);
 
       this.form = {
+        id: link.id,
         url: link.url,
         slug: link.slug,
       };
-
-      const { url, slug } = this.form;
-      const response = await fetch(`/links/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          url,
-          slug,
-        }),
+    },
+    async deleteShortLink(id) {
+      await handleDeleteLink(id);
+      await this.list();
+    },
+    async submit(id) {
+      await handleCreateOrUpdateLink({
+        data: this.form,
+        url: `link/${id}`,
+        id,
       });
-      if (response.ok) {
-        this.dialog = false;
-        this.list();
-      }
+      this.dialog = false;
+      await this.list();
     },
     async list() {
       this.links = await listLinks();
     },
+    isURL(str) {
+      let url;
+
+      try {
+        url = new URL(str);
+      } catch (_) {
+        return false;
+      }
+
+      return url.protocol === "http:" || url.protocol === "https:";
+    },
   },
   async mounted() {
     await this.list();
-    await this.trackAccessLog();
-  },
-  isURL(str) {
-    let url;
-
-    try {
-      url = new URL(str);
-    } catch (_) {
-      return false;
-    }
-
-    return url.protocol === "http:" || url.protocol === "https:";
   },
 };
 </script>

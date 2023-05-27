@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { handleSubmit } from "../../lib/handleSubmit";
+import { handleCreateOrUpdateLink } from "../../lib/handleCreateOrUpdateLink";
 
 export default {
   name: "Header",
@@ -93,11 +93,24 @@ export default {
     };
   },
   methods: {
-    submit() {
-      handleSubmit({
-        data: this.form,
-        url: "link",
-      });
+    async submit() {
+      try {
+        await handleCreateOrUpdateLink({
+          data: this.form,
+          url: "link",
+        });
+        this.dialog = false;
+        this.resetForm();
+        $emit("link-created");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    resetForm() {
+      this.form = {
+        url: "",
+        slug: "",
+      };
     },
     isURL(str) {
       let url;

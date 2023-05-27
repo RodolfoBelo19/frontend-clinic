@@ -1,6 +1,7 @@
 export interface IHandleSubmit {
   data: IData;
   url: string;
+  id?: string;
 }
 
 interface IData {

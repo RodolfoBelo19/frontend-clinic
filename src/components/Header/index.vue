@@ -96,7 +96,7 @@ export default {
     submit() {
       handleSubmit({
         data: this.form,
-        url: "link"
+        url: "link",
       });
     },
     isURL(str) {

@@ -101,7 +101,6 @@ export default {
         });
         this.dialog = false;
         this.resetForm();
-        $emit("link-created");
       } catch (error) {
         console.log(error);
       }

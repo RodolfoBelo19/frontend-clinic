@@ -22,10 +22,10 @@
               </h2>
             </v-card-title>
             <v-card-text>
-              <v-form v-model="isValidForm" @submit.prevent="handleSubmit">
+              <v-form v-model="isValidForm" @submit.prevent="submit">
                 <v-text-field
                   type="text"
-                  v-model="url"
+                  v-model="form.url"
                   placeholder="https://example.com"
                   label="Link*"
                   required
@@ -33,7 +33,7 @@
                 />
                 <v-text-field
                   type="text"
-                  v-model="slug"
+                  v-model="form.slug"
                   label="Slug (optional)"
                 />
                 <div class="flex gap-2 justify-end">
@@ -73,13 +73,17 @@
 </template>
 
 <script>
+import { handleSubmit } from "../../lib/handleSubmit";
+
 export default {
   name: "Header",
   data() {
     return {
       dialog: false,
-      url: "",
-      slug: "",
+      form: {
+        url: "",
+        slug: "",
+      },
       isValidForm: false,
       rules: [
         (v) =>
@@ -89,8 +93,11 @@ export default {
     };
   },
   methods: {
-    handleSubmit() {
-      console.log(this.url, this.slug);
+    submit() {
+      handleSubmit({
+        data: this.form,
+        url: "link"
+      });
     },
     isURL(str) {
       let url;

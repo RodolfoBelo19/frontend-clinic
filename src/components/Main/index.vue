@@ -4,8 +4,8 @@ import InfoStats from "./InfoStats/index.vue";
 </script>
 
 <template>
-  <div class="flex bg-gray-100 h-screen">
-    <div class="md:max-w-7xl w-full flex flex-col justify-center">
+  <div class="flex justify-center bg-gray-100 h-screen">
+    <div class="md:max-w-7xl w-full flex flex-col items-center justify-center">
       <CardLink />
       <InfoStats />
     </div>

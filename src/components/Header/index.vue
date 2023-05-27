@@ -13,60 +13,51 @@
         class="text-center w-full shadow-sm p-3 border-2 border-gray-300 bg-gray-200 rounded-lg"
       />
       <button @click="dialog = true" class="text-2xl text-gray-400">+</button>
-      <v-form v-model="isValidForm" @submit.prevent="handleSubmit">
-        <v-row justify="center">
-          <v-dialog v-model="dialog" persistent width="1024">
-            <v-card>
-              <v-card-title>
-                <h2 class="text-h5 mt-5 text-gray-400 text-center">
-                  Shorten Your Link
-                </h2>
-              </v-card-title>
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="6">
-                      <v-text-field
-                        type="text"
-                        v-model="url"
-                        placeholder="https://example.com"
-                        label="Link*"
-                        required
-                        :rules="rules"
-                      />
-                    </v-col>
-                    <v-col cols="6">
-                      <v-text-field
-                        type="text"
-                        v-model="slug"
-                        label="Slug (optional)"
-                      />
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                  color="blue-darken-1"
-                  variant="text"
-                  @click="dialog = false"
-                >
-                  Close
-                </v-btn>
-                <button
-                  type="submit"
-                  color="blue-darken-1"
-                  variant="text"
-                  :disabled="!isValidForm"
-                >
-                  Save
-                </button>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-row>
-      </v-form>
+      <v-row justify="center">
+        <v-dialog v-model="dialog" persistent width="1024">
+          <v-card>
+            <v-card-title>
+              <h2 class="text-h5 mt-5 text-gray-400 text-center">
+                Shorten Your Link
+              </h2>
+            </v-card-title>
+            <v-card-text>
+              <v-form v-model="isValidForm" @submit.prevent="handleSubmit">
+                <v-text-field
+                  type="text"
+                  v-model="url"
+                  placeholder="https://example.com"
+                  label="Link*"
+                  required
+                  :rules="rules"
+                />
+                <v-text-field
+                  type="text"
+                  v-model="slug"
+                  label="Slug (optional)"
+                />
+                <div class="flex gap-2 justify-end">
+                  <v-btn
+                    color="blue-darken-1"
+                    variant="text"
+                    @click="dialog = false"
+                  >
+                    Close
+                  </v-btn>
+                  <v-btn
+                    :disabled="!isValidForm"
+                    type="submit"
+                    color="blue-darken-1"
+                    variant="text"
+                  >
+                    Shorten
+                  </v-btn>
+                </div>
+              </v-form>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
+      </v-row>
     </div>
 
     <div class="flex items-center gap-4">

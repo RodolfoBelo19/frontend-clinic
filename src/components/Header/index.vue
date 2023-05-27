@@ -5,7 +5,7 @@
     <h1 class="text-center text-gray-400 font-bold tracking-widest">DDSV</h1>
 
     <div class="gap-5 w-6/12 flex items-center justify-center">
-      <font-awesome-icon class="text-gray-400" icon="search" />
+      <font-awesome-icon class="text-gray-400" :icon="['fa', 'search']" />
 
       <input
         placeholder="Search or Paste URL"
@@ -61,13 +61,13 @@
     </div>
 
     <div class="flex items-center gap-4">
-      <font-awesome-icon class="text-gray-400" icon="bell" />
+      <font-awesome-icon class="text-gray-400" :icon="['fa', 'bell']" />
       <img
         class="rounded-full w-12"
         src="https://avatars.githubusercontent.com/u/64740047?v=4"
         alt=""
       />
-      <font-awesome-icon class="text-gray-400" icon="chevron-down" />
+      <font-awesome-icon class="text-gray-400" :icon="['fa', 'chevron-down']" />
     </div>
   </div>
 </template>

@@ -14,7 +14,9 @@
           <span class="text-xl text-gray-600 font-sans font-bold">{{
             link.slug
           }}</span>
-          <span class="text-sm text-cyan-400">{{ link.url }}</span>
+          <span class="text-sm text-cyan-400">
+            <a target="_blank" :href="`https://${link.url}`">{{ link.url }}</a>
+          </span>
         </div>
       </div>
       <div class="flex gap-5 items-center">
@@ -133,7 +135,7 @@ export default {
 
       this.form = {
         id: link.id,
-        url: link.url,
+        url: `https://${link.url}`,
         slug: link.slug,
       };
     },
@@ -144,6 +146,20 @@ export default {
     async submit(id) {
       if (this.form.slug === "") {
         this.form.slug = uuid.v5(this.form.url, NAMESPACE);
+      }
+
+      const link = this.links.find((link) => link.id === id);
+      if(link.url === this.form.url && link.slug === this.form.slug) {
+        this.dialog = false;
+        return;
+      }
+
+      if(`https://${link.url}` === this.form.url) {
+        delete this.form.url;
+      }
+
+      if(link.slug === this.form.slug) {
+        delete this.form.slug;
       }
 
       try {

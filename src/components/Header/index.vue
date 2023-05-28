@@ -74,11 +74,15 @@
 
 <script>
 import { handleCreateOrUpdateLink } from "../../lib/handleCreateOrUpdateLink";
+import { uuid } from "vue-uuid";
+
+const NAMESPACE = "65f9af5d-f23f-4065-ac85-da725569fdcd";
 
 export default {
   name: "Header",
   data() {
     return {
+      NAMESPACE,
       dialog: false,
       form: {
         url: "",
@@ -94,6 +98,10 @@ export default {
   },
   methods: {
     async submit() {
+      if (this.form.slug === "") {
+        this.form.slug = uuid.v5(this.form.url, NAMESPACE);
+      }
+
       try {
         await handleCreateOrUpdateLink({
           data: this.form,
@@ -101,6 +109,7 @@ export default {
         });
         this.dialog = false;
         this.resetForm();
+        window.location.reload();
       } catch (error) {
         console.log(error);
       }

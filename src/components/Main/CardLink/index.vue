@@ -102,11 +102,15 @@
 import { listLinks } from "../../../lib/listLinks";
 import { handleCreateOrUpdateLink } from "../../../lib/handleCreateOrUpdateLink";
 import { handleDeleteLink } from "../../../lib/handleDeleteLink";
+import { uuid } from "vue-uuid";
+
+const NAMESPACE = "65f9af5d-f23f-4065-ac85-da725569fdcd";
 
 export default {
   name: "CardLink",
   data() {
     return {
+      NAMESPACE,
       dialog: false,
       links: [],
       form: {
@@ -138,13 +142,21 @@ export default {
       await this.list();
     },
     async submit(id) {
-      await handleCreateOrUpdateLink({
-        data: this.form,
-        url: `link/${id}`,
-        id,
-      });
-      this.dialog = false;
-      await this.list();
+      if (this.form.slug === "") {
+        this.form.slug = uuid.v5(this.form.url, NAMESPACE);
+      }
+
+      try {
+        await handleCreateOrUpdateLink({
+          data: this.form,
+          url: `link/${id}`,
+          id,
+        });
+        this.dialog = false;
+        await this.list();
+      } catch (error) {
+        console.log(error);
+      }
     },
     async list() {
       this.links = await listLinks();

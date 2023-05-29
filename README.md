@@ -1,6 +1,6 @@
 # Vue 3 + Vite (Project Clinic)
 
-https://github.com/RodolfoBelo19/frontend-clinic/assets/64740047/7d69d072-bc70-49d7-98f8-573b8b928499
+https://github.com/RodolfoBelo19/frontend-clinic/assets/64740047/e886b6d7-415f-42c0-b66b-be66e69a78cf
 
 ## Requisitos
 ### Certifique-se de ter as seguintes ferramentas instaladas em seu sistema:

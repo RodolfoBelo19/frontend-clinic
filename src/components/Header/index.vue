@@ -2,7 +2,7 @@
   <div
     class="gap-5 bg-white fixed w-full shadow-lg py-4 px-5 flex items-center justify-between"
   >
-    <h1 class="text-center text-gray-400 font-bold tracking-widest">DDSV</h1>
+    <h1 class="text-center text-gray-400 font-bold tracking-widest">DDSV </h1>
 
     <div class="gap-5 w-6/12 flex items-center justify-center">
       <font-awesome-icon class="text-gray-400" :icon="['fa', 'search']" />

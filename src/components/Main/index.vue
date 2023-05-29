@@ -1,13 +1,9 @@
 <script setup>
-import CardLink from "./CardLink/index.vue";
-import InfoStats from "./InfoStats/index.vue";
+import Link from "./Link/index.vue";
 </script>
 
 <template>
   <div class="flex justify-center bg-gray-100 h-screen">
-    <div class="md:max-w-5xl mt-28 w-full flex flex-col items-center justify-center">
-      <InfoStats />
-      <CardLink />
-    </div>
+    <Link />
   </div>
 </template>

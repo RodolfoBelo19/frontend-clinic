@@ -15,13 +15,20 @@
             link.slug
           }}</span>
           <span class="text-sm text-cyan-400">
-            <a target="_blank" :href="`https://${link.url}`">{{ link.url }}</a>
+            <a
+              @click="saveInfoStatsLink(link.id)"
+              target="_blank"
+              :href="`https://${link.url}`"
+              >{{ link.url }}</a
+            >
           </span>
         </div>
       </div>
       <div class="flex gap-5 items-center">
         <div class="text-gray-300">
-          <small>23</small>
+          <small>{{
+            linksInfo.filter((event) => event.link_id === link.id).length
+          }}</small>
           <font-awesome-icon
             class="mx-2 text-sm"
             :icon="['fa', 'chart-simple']"
@@ -101,9 +108,11 @@
 </template>
 
 <script>
-import { listLinks } from "../../../lib/listLinks";
-import { handleCreateOrUpdateLink } from "../../../lib/handleCreateOrUpdateLink";
-import { handleDeleteLink } from "../../../lib/handleDeleteLink";
+import { listLinks } from "../../../../lib/listLinks";
+import { listInfoLinks } from "../../../../lib/listInfoLinks";
+import { handleCreateOrUpdateLink } from "../../../../lib/handleCreateOrUpdateLink";
+import { handleDeleteLink } from "../../../../lib/handleDeleteLink";
+import { handleAccessLogTrackers } from "../../../../lib/handleAccessLogTrackers";
 import { uuid } from "vue-uuid";
 
 const NAMESPACE = "65f9af5d-f23f-4065-ac85-da725569fdcd";
@@ -115,6 +124,8 @@ export default {
       NAMESPACE,
       dialog: false,
       links: [],
+      count: 0,
+      linksInfo: [],
       form: {
         id: "",
         url: "",
@@ -141,7 +152,7 @@ export default {
     },
     async deleteShortLink(id) {
       await handleDeleteLink(id);
-      await this.list();
+      await this.getList();
     },
     async submit(id) {
       if (this.form.slug === "") {
@@ -149,16 +160,16 @@ export default {
       }
 
       const link = this.links.find((link) => link.id === id);
-      if(link.url === this.form.url && link.slug === this.form.slug) {
+      if (link.url === this.form.url && link.slug === this.form.slug) {
         this.dialog = false;
         return;
       }
 
-      if(`https://${link.url}` === this.form.url) {
+      if (`https://${link.url}` === this.form.url) {
         delete this.form.url;
       }
 
-      if(link.slug === this.form.slug) {
+      if (link.slug === this.form.slug) {
         delete this.form.slug;
       }
 
@@ -169,13 +180,16 @@ export default {
           id,
         });
         this.dialog = false;
-        await this.list();
+        await this.getList();
       } catch (error) {
         console.log(error);
       }
     },
-    async list() {
-      this.links = await listLinks();
+    async getList() {
+      [this.links, this.linksInfo] = await Promise.all([
+        listLinks(),
+        listInfoLinks(),
+      ]);
     },
     isURL(str) {
       let url;
@@ -188,9 +202,33 @@ export default {
 
       return url.protocol === "http:" || url.protocol === "https:";
     },
+    async saveInfoStatsLink(id) {
+      const link = this.links.find((link) => link.id === id);
+
+      const accessLogData = {
+        link_id: link.id,
+        ip_address: null,
+        user_agent: null,
+      };
+
+      try {
+        const response = await fetch("https://api.ipify.org?format=json");
+        const data = await response.json();
+
+        accessLogData.ip_address = data.ip;
+        accessLogData.user_agent = navigator.userAgent;
+      } catch (error) {
+        console.error("Erro ao obter IP:", error);
+      } finally {
+        handleAccessLogTrackers({
+          data: accessLogData,
+          url: "access-log-tracker",
+        });
+      }
+    },
   },
   async mounted() {
-    await this.list();
+    await this.getList();
   },
 };
 </script>

@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPhone, faSearch, faBell, faChevronDown, faEllipsisVertical, faChartSimple, faCopy, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faPhone, faSearch, faBell, faChevronDown, faEllipsisVertical, faChartSimple, faCopy, faEdit, faTrash, faLink, faArrowPointer } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { FontAwesomeLayers } from '@fortawesome/vue-fontawesome'
 
@@ -22,4 +22,4 @@ createApp(App)
   .component('font-awesome-layers', FontAwesomeLayers)
   .mount('#app')
 
-library.add(faPhone, faSearch, faBell, faChevronDown, faEllipsisVertical, faChartSimple, faCopy, faEdit, faTrash)
+library.add(faPhone, faSearch, faBell, faChevronDown, faEllipsisVertical, faChartSimple, faCopy, faEdit, faTrash, faLink, faArrowPointer)

@@ -1,7 +1,7 @@
 <template>
   <div class="w-full" v-if="links.length">
     <div
-      v-for="link in links"
+      v-for="link in filteredLinks"
       :key="link.id"
       class="py-7 px-5 m-5 flex justify-between items-center bg-white rounded-md shadow-lg"
     >
@@ -59,9 +59,15 @@
   </div>
   <div v-else>
     <div class="py-7 px-5 m-5 bg-white rounded-md shadow-lg">
+      <span class="text-xl">No links, please create a new link</span>
+    </div>
+  </div>
+  <div v-if="!filteredLinks.length">
+    <div class="py-7 px-5 m-5 bg-white rounded-md shadow-lg">
       <span class="text-xl">No links found</span>
     </div>
   </div>
+  
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent width="1024">
       <v-card>
@@ -119,6 +125,7 @@ const NAMESPACE = "65f9af5d-f23f-4065-ac85-da725569fdcd";
 
 export default {
   name: "CardLink",
+  props: ["searchValue"],
   data() {
     return {
       NAMESPACE,
@@ -229,6 +236,17 @@ export default {
   },
   async mounted() {
     await this.getList();
+  },
+  computed: {
+    filteredLinks() {
+      if (this.searchValue) {
+        return this.links.filter((link) =>
+          link.slug.includes(this.searchValue)
+        );
+      }
+
+      return this.links;
+    },
   },
 };
 </script>

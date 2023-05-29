@@ -11,6 +11,7 @@
         placeholder="Search or Paste URL"
         type="text"
         class="text-center w-full shadow-sm p-3 border-2 border-gray-300 bg-gray-200 rounded-lg"
+        @input="emitSearch($event.target.value)"
       />
       <button @click="dialog = true" class="text-2xl text-gray-400">+</button>
       <v-row justify="center">
@@ -94,6 +95,7 @@ export default {
           !!v || "Required field! Please fill in this field with a valid URL!",
         (value) => this.isURL(value) || "URL is not valid",
       ],
+      searchValue: "",
     };
   },
   methods: {
@@ -131,6 +133,9 @@ export default {
 
       return url.protocol === "http:" || url.protocol === "https:";
     },
+    emitSearch(value) {
+      this.$emit("search", value);
+    }
   },
 };
 </script>

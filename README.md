@@ -1,7 +1,39 @@
-# Vue 3 + Vite
+# Vue 3 + Vite (Project Clinic)
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+https://github.com/RodolfoBelo19/frontend-clinic/assets/64740047/7d69d072-bc70-49d7-98f8-573b8b928499
 
-## Recommended IDE Setup
+## Requisitos
+### Certifique-se de ter as seguintes ferramentas instaladas em seu sistema:
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- Node.js: https://nodejs.org (versão 14 ou superior)
+- npm: Geralmente é instalado junto com o Node.js
+
+## Instalação
+### Siga as etapas abaixo para configurar o projeto em sua máquina:
+
+- 1: Clone este repositório para o seu diretório local usando o seguinte comando:
+
+```bash
+git clone https://github.com/RodolfoBelo19/frontend-clinic
+```
+
+- 2: Instale as dependências do projeto:
+
+```bash
+npm install
+# ou
+yarn
+```
+
+## Executando o Projeto
+### Após concluir a instalação e configuração, você pode iniciar o servidor de desenvolvimento do Vue.js com o seguinte comando:
+
+```bash
+npm run dev
+# ou
+yarn run dev
+```
+
+### Aguarde até que o servidor de desenvolvimento seja iniciado e acesse a seguinte URL em seu navegador:
+- http://127.0.0.1:5173/
+
